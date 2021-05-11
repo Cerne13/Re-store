@@ -8,28 +8,32 @@ const ShoppingCartTable = () => {
 
 			<table className='table'>
 				<thead>
-					<thead>#</thead>
-					<th>Item</th>
-					<th>Count</th>
-					<th>Price</th>
-					<th>Action</th>
+					<tr>
+						<th>#</th>
+						<th>Item</th>
+						<th>Count</th>
+						<th>Price</th>
+						<th>Action</th>
+					</tr>
 				</thead>
 				<tbody>
-					<td>1</td>
-					<td>Name of the book</td>
-					<td>2</td>
-					<td>$40</td>
-					<td className='table-actions'>
-						<button className='btn btn-outline-danger btn-sm float-right'>
-							<i className='fa fa-trash-o' />
-						</button>
-						<button className='btn btn-outline-success btn-sm float-right'>
-							<i className='fa fa-plus-circle' />
-						</button>
-						<button className='btn btn-outline-warning btn-sm float-right'>
-							<i className='fa fa-minus-circle' />
-						</button>
-					</td>
+					<tr>
+						<td>1</td>
+						<td>Name of the book</td>
+						<td>2</td>
+						<td>$40</td>
+						<td className='table-actions'>
+							<button className='btn btn-outline-danger btn-sm float-right'>
+								<i className='fa fa-trash-o' />
+							</button>
+							<button className='btn btn-outline-success btn-sm float-right'>
+								<i className='fa fa-plus-circle' />
+							</button>
+							<button className='btn btn-outline-warning btn-sm float-right'>
+								<i className='fa fa-minus-circle' />
+							</button>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 
