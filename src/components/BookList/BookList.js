@@ -9,60 +9,60 @@ import compose from '../../utils';
 import './BookList.css';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 
-class BookList extends Component {
-	componentDidMount() {
-		const {
-			bookstoreService,
-			booksLoaded,
-			booksRequested,
-			booksError,
-		} = this.props;
+const BookList = ({ books }) => {
+  return (
+    <ul className="book-list">
+      {books.map((book) => {
+        return (
+          <li key={book.id}>
+            <BookListItem book={book} />
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+class BookListContainer extends Component {
+  componentDidMount() {
+    this.props.fetchBooks();
+  }
 
-		booksRequested();
-		bookstoreService
-			.getBooks()
-			.then((data) => {
-				booksLoaded(data);
-			})
-			.catch((err) => booksError(err));
-	}
+  render() {
+    const { books, loading, error } = this.props;
 
-	render() {
-		const { books, loading, error } = this.props;
+    if (loading) {
+      return <Spinner />;
+    }
 
-		if (loading) {
-			return <Spinner />;
-		}
-
-		if (error) {
-			return <ErrorIndicator />;
-		}
-
-		return (
-			<ul className='book-list'>
-				{books.map((book) => {
-					return (
-						<li key={book.id}>
-							<BookListItem book={book} />
-						</li>
-					);
-				})}
-			</ul>
-		);
-	}
+    if (error) {
+      return <ErrorIndicator />;
+    }
+    return <BookList books={books} />;
+  }
 }
 
 const mapStateToProps = ({ books, loading, error }) => {
-	return {
-		books,
-		loading,
-		error,
-	};
+  return {
+    books,
+    loading,
+    error,
+  };
 };
 
-const mapDispatchToProps = { booksLoaded, booksRequested, booksError };
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { bookstoreService } = ownProps;
+  return {
+    fetchBooks: () => {
+      dispatch(booksRequested());
+      bookstoreService
+        .getBooks()
+        .then((data) => dispatch(booksLoaded(data)))
+        .catch((err) => dispatch(booksError(err)));
+    },
+  };
+};
 
 export default compose(
-	withBookstoreService(),
-	connect(mapStateToProps, mapDispatchToProps)
-)(BookList);
+  withBookstoreService(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(BookListContainer);
