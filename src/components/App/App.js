@@ -24,7 +24,10 @@ const mapStateToProps = ({
 	shoppingCart: { cartItems },
 }) => {
 	return {
-		numItems: cartItems.length,
+		numItems: cartItems.reduce(
+			(totalQuantity, { count }) => totalQuantity + count,
+			0
+		),
 		total: orderTotal,
 	};
 };
